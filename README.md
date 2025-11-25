@@ -1,4 +1,4 @@
-# Deployment a Web Application Using Terraform
+# Deploying a Web Application Using Terraform
 
 This project provisions a web application that ensures:
 
