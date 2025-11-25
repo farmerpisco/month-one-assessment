@@ -85,3 +85,16 @@ resource "aws_nat_gateway" "nat_gw" {
 
   depends_on = [aws_internet_gateway.tf_gw]
 }
+
+resource "aws_route_table" "tf_rt" {
+  vpc_id = aws_vpc.tf_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.tf_gw.id
+  }
+
+  tags = {
+    Name = "Techcorp-Public-RT"
+  }
+}
