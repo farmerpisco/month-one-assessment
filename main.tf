@@ -356,3 +356,15 @@ resource "aws_lb_target_group" "lb_tg" {
     interval            = 30
   }
 }
+
+resource "aws_lb_target_group_attachment" "tg_at" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.web_server1.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "tg_at2" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.web_server2.id
+  port             = 80
+}
