@@ -60,3 +60,11 @@ resource "aws_subnet" "tf_subnet_private2" {
     Name = "Techcorp-private-subnet-2"
   }
 }
+
+resource "aws_internet_gateway" "tf_gw" {
+  vpc_id = aws_vpc.tf_vpc.id
+
+  tags = {
+    Name = "Techcorp-Internet-Gateway"
+  }
+}
