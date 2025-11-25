@@ -40,3 +40,23 @@ resource "aws_subnet" "tf_subnet_public2" {
     Name = "Techcorp-Public-Subnet-2"
   }
 }
+
+resource "aws_subnet" "tf_subnet_private1" {
+  vpc_id     = aws_vpc.tf_vpc.id
+  cidr_block = "10.0.3.0/24"
+  availability_zone = "eu-west-2a"
+
+  tags = {
+    Name = "Techcorp-private-subnet-1"
+  }
+}
+
+resource "aws_subnet" "tf_subnet_private2" {
+  vpc_id     = aws_vpc.tf_vpc.id
+  cidr_block = "10.0.4.0/24"
+  availability_zone = "eu-west-2b"
+
+  tags = {
+    Name = "Techcorp-private-subnet-2"
+  }
+}
