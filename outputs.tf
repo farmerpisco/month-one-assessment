@@ -10,5 +10,5 @@ output "vpc-id" {
 
 output "Bastion_public_ip" {
   description = "The public ip of the bastion host server"
-  value       = aws_eip.bastion_eip
+  value       = aws_eip.bastion_eip.public_ip
 }
