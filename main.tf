@@ -179,3 +179,63 @@ resource "aws_security_group" "wsg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "dbsg" {
+  name   = "database-sg"
+  vpc_id = aws_vpc.tf_vpc.id
+
+  tags = {
+    Name = "Database-SG"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "db_mysql_from_web" {
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.wsg.id
+  security_group_id        = aws_security_group.dbsg.id
+  description              = "Allow MySQL from Web SG"
+}
+
+resource "aws_security_group_rule" "db_ssh_from_bastion" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bsg.id
+  security_group_id        = aws_security_group.dbsg.id
+  description              = "Allow SSH from Bastion SG"
+}
+
+resource "aws_security_group" "bsg" {
+  name   = "bastion-sg"
+  vpc_id = aws_vpc.tf_vpc.id
+
+  tags = {
+    Name = "Bastion-SG"
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["102.89.76.176/32"]
+    description = "Allow SSH from my IP"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
