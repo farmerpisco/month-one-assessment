@@ -282,3 +282,16 @@ resource "aws_instance" "web_server2" {
     Name = "Web-server2"
   }
 }
+
+resource "aws_instance" "db_server" {
+  ami             = "ami-0a0ff88d0f3f85a14"
+  instance_type   = "t3.small"
+  subnet_id       = aws_subnet.tf_subnet_private1.id
+  security_groups = [aws_security_group.dbsg.id]
+
+  user_data = file("${path.module}/db_server_setup.sh")
+
+  tags = {
+    Name = "DB-server"
+  }
+}
