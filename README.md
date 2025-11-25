@@ -47,5 +47,57 @@ Follow the steps below to deploy the infrastructure
 
 ### 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+git clone https://github.com/farmerpisco/month-one-assessment.git
+cd month-one-assessment
+```
+
+### 2. **Initialize Terraform**
+```bash
+terraform init
+```
+
+### 3. **Preview the Infrastructure Plan**
+```bash
+terraform plan
+```
+This will show the resources that will be created
+
+### 4. **Deploy the infrastructure**
+```bash
+terraform apply
+```
+You will be prompted to input "yes" to allow terraform provision the resources
+Terraform will provision the following:
+- Virtual Private Cloud (VPC), Public and Private Subnets, Route Tables
+- Internet gateway, and NAT gateway
+- Security Groups
+- EC2 Instances for Web servers, Database server, and Bastion host server
+- An Application Load Balancer
+- User data configuration
+
+### 5. **Retrieve Output Values**
+You will see the following outputs after terraform is done with the infrastructure deployments:
+- VPC ID
+- ALB DNS name
+- Bastion host elastic public ip
+
+### 6. **SSH into the Bastion Host**
+You can ssh into the bastion host using your key pair name and bastion host elastic IP
+```bash
+ssh -i yourkeyname.pem ec2-user@bastion_public_ip
+```
+
+### 7. **Infrastructure CLeanup** 
+You should destory all the infrastructure when you are done to avoid unwanted costs
+```bash
+terraform destroy
+```
+You will be prompted to input "yes" to allow terraform destroy all the resources
+Terraform will destroy the following:
+- Virtual Private Cloud (VPC), Public and Private Subnets, Route Tables
+- Internet gateway, and NAT gateway
+- Security Groups
+- EC2 Instances for Web servers, Database server, and Bastion host server
+- An Application Load Balancer
+- User data configuration
+
