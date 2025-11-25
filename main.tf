@@ -281,7 +281,7 @@ resource "aws_instance" "web_server1" {
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.wsg.id]
 
-  user_data = file("${path.module}/web_server_setup.sh")
+  user_data = file("${path.module}/user_data/web_server_setup.sh")
 
   tags = {
     Name = "Web-server1"
@@ -294,7 +294,7 @@ resource "aws_instance" "web_server2" {
   subnet_id       = aws_subnet.tf_subnet_private2.id
   security_groups = [aws_security_group.wsg.id]
 
-  user_data = file("${path.module}/web_server_setup.sh")
+  user_data = file("${path.module}/user_data/web_server_setup.sh")
 
   tags = {
     Name = "Web-server2"
@@ -307,7 +307,7 @@ resource "aws_instance" "db_server" {
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.dbsg.id]
 
-  user_data = file("${path.module}/db_server_setup.sh")
+  user_data = file("${path.module}/user_data/db_server_setup.sh")
 
   tags = {
     Name = "DB-server"
