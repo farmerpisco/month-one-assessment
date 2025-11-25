@@ -101,3 +101,10 @@ Terraform will destroy the following:
 - An Application Load Balancer
 - User data configuration
 
+## **Author**
+
+### **Paul Adegoke**
+
+AltSchool Africa – Cloud Engineering Track
+
+Terraform Infrastructure Deployment – Semester 3 Assessment
