@@ -295,3 +295,47 @@ resource "aws_instance" "db_server" {
     Name = "DB-server"
   }
 }
+
+resource "aws_security_group" "alb_sg" {
+  name        = "alb-security-group"
+  description = "Security group for Application Load Balancer"
+  vpc_id      = aws_vpc.tf_vpc.id
+
+  ingress {
+    description = "HTTP from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS from anywhere"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name        = "Techcorp-alb-SG"
+  }
+}
+
+resource "aws_lb" "lb_tf" {
+  name               = "Techcorp-LB"
+  load_balancer_type = "application"
+  subnets            = [
+    aws_subnet.tf_subnet_public1.id,
+    aws_subnet.tf_subnet_public2.id
+  ]
+  security_groups    = [aws_security_group.alb_sg.id]
+}
