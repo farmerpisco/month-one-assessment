@@ -98,3 +98,13 @@ resource "aws_route_table" "tf_rt" {
     Name = "Techcorp-Public-RT"
   }
 }
+
+resource "aws_route_table_association" "public_rta1" {
+  subnet_id      = aws_subnet.tf_subnet_public1.id
+  route_table_id = aws_route_table.tf_rt.id
+}
+
+resource "aws_route_table_association" "public_rta2" {
+  subnet_id      = aws_subnet.tf_subnet_public2.id
+  route_table_id = aws_route_table.tf_rt.id
+}
