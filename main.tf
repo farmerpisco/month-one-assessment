@@ -131,3 +131,51 @@ resource "aws_route_table_association" "private_rta2" {
   subnet_id      = aws_subnet.tf_subnet_private2.id
   route_table_id = aws_route_table.tf_private_rt.id
 }
+
+resource "aws_security_group" "wsg" {
+  name   = "web-sg"
+  vpc_id = aws_vpc.tf_vpc.id
+
+  tags = {
+    Name = "Web-SG"
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTP from anywhere"
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTPS from anywhere"
+  }
+
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bsg.id]
+    description     = "Allow SSH from Bastion SG"
+  }
+
+  ingress {
+  from_port = 80
+  to_port   = 80
+  protocol  = "tcp"
+  security_groups = [aws_security_group.alb_sg.id]
+}
+
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
