@@ -368,3 +368,14 @@ resource "aws_lb_target_group_attachment" "tg_at2" {
   target_id        = aws_instance.web_server2.id
   port             = 80
 }
+
+resource "aws_lb_listener" "lb_http" {
+  load_balancer_arn = aws_lb.lb_tf.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+}
