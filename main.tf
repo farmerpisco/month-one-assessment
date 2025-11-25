@@ -68,3 +68,9 @@ resource "aws_internet_gateway" "tf_gw" {
     Name = "Techcorp-Internet-Gateway"
   }
 }
+
+resource "aws_eip" "nat" {
+  tags = {
+    Name = "Techcorp-NAT-EIP"
+  }
+}
