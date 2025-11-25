@@ -74,3 +74,14 @@ resource "aws_eip" "nat" {
     Name = "Techcorp-NAT-EIP"
   }
 }
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.tf_subnet_public1.id
+
+  tags = {
+    Name = "Techcorp-NAT-GW"
+  }
+
+  depends_on = [aws_internet_gateway.tf_gw]
+}
