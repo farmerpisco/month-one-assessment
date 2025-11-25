@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-2"
+  region = var.region
 }
 
 resource "aws_vpc" "tf_vpc" {
@@ -259,7 +259,7 @@ resource "aws_eip" "bastion_eip" {
 
 resource "aws_instance" "web_server1" {
   ami             = "ami-0a0ff88d0f3f85a14"
-  instance_type   = "t3.micro"
+  instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.wsg.id]
 
@@ -272,7 +272,7 @@ resource "aws_instance" "web_server1" {
 
 resource "aws_instance" "web_server2" {
   ami             = "ami-0a0ff88d0f3f85a14"
-  instance_type   = "t3.micro"
+  instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private2.id
   security_groups = [aws_security_group.wsg.id]
 
@@ -285,7 +285,7 @@ resource "aws_instance" "web_server2" {
 
 resource "aws_instance" "db_server" {
   ami             = "ami-0a0ff88d0f3f85a14"
-  instance_type   = "t3.small"
+  instance_type   = var.db_instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.dbsg.id]
 
