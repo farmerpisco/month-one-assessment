@@ -15,3 +15,15 @@ variable "db_instance_type" {
   type        = string
   default     = "t3.small"
 }
+
+variable "ip_address" {
+  description = "The IP address that will have inbound access to the bastion host"
+  type        = string
+  default     = "102.89.76.176/32"
+}
+
+variable "key_pair_name" {
+  description = "The name of the keypair for bastion host ssh inbound"
+  type        = string
+  default     = "AltSchoolDemo"
+}

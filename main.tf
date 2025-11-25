@@ -228,7 +228,7 @@ resource "aws_security_group" "bsg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["102.89.76.176/32"]
+    cidr_blocks = [var.ip_address]
     description = "Allow SSH from my IP"
   }
 
@@ -241,8 +241,25 @@ resource "aws_security_group" "bsg" {
   }
 }
 
+data "aws_ami" "amazon_linux_2" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["137112412989"] # Amazon’s official AMI owner ID
+}
+
+
 resource "aws_instance" "bastion_host" {
-  ami             = "ami-0a0ff88d0f3f85a14"
+  ami             = data.aws_ami.amazon_linux_2.id
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.tf_subnet_public1.id
   security_groups = [aws_security_group.bsg.id]
@@ -258,7 +275,7 @@ resource "aws_eip" "bastion_eip" {
 }
 
 resource "aws_instance" "web_server1" {
-  ami             = "ami-0a0ff88d0f3f85a14"
+  ami             = data.aws_ami.amazon_linux_2.id
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.wsg.id]
@@ -271,7 +288,7 @@ resource "aws_instance" "web_server1" {
 }
 
 resource "aws_instance" "web_server2" {
-  ami             = "ami-0a0ff88d0f3f85a14"
+  ami             = data.aws_ami.amazon_linux_2.id
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private2.id
   security_groups = [aws_security_group.wsg.id]
@@ -284,7 +301,7 @@ resource "aws_instance" "web_server2" {
 }
 
 resource "aws_instance" "db_server" {
-  ami             = "ami-0a0ff88d0f3f85a14"
+  ami             = data.aws_ami.amazon_linux_2.id
   instance_type   = var.db_instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.dbsg.id]
