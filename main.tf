@@ -263,6 +263,7 @@ resource "aws_instance" "bastion_host" {
   instance_type   = "t3.micro"
   subnet_id       = aws_subnet.tf_subnet_public1.id
   security_groups = [aws_security_group.bsg.id]
+  key_name        = var.key_pair_name
   
 
   tags = {
