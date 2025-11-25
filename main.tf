@@ -240,3 +240,19 @@ resource "aws_security_group" "bsg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_instance" "bastion_host" {
+  ami             = "ami-0a0ff88d0f3f85a14"
+  instance_type   = "t3.micro"
+  subnet_id       = aws_subnet.tf_subnet_public1.id
+  security_groups = [aws_security_group.bsg.id]
+  
+
+  tags = {
+    Name = "Bastion-host"
+  }
+}
+
+resource "aws_eip" "bastion_eip" {
+  instance = aws_instance.bastion_host.id
+}
