@@ -121,3 +121,13 @@ resource "aws_route_table" "tf_private_rt" {
     Name = "Techcorp-Private-RT"
   }
 }
+
+resource "aws_route_table_association" "private_rta1" {
+  subnet_id      = aws_subnet.tf_subnet_private1.id
+  route_table_id = aws_route_table.tf_private_rt.id
+}
+
+resource "aws_route_table_association" "private_rta2" {
+  subnet_id      = aws_subnet.tf_subnet_private2.id
+  route_table_id = aws_route_table.tf_private_rt.id
+}
