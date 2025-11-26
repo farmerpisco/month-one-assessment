@@ -280,6 +280,7 @@ resource "aws_instance" "web_server1" {
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.wsg.id]
+  key_name        = var.key_pair_name
 
   user_data = file("${path.module}/user_data/web_server_setup.sh")
 
@@ -293,6 +294,7 @@ resource "aws_instance" "web_server2" {
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.tf_subnet_private2.id
   security_groups = [aws_security_group.wsg.id]
+  key_name        = var.key_pair_name
 
   user_data = file("${path.module}/user_data/web_server_setup.sh")
 
@@ -306,6 +308,7 @@ resource "aws_instance" "db_server" {
   instance_type   = var.db_instance_type
   subnet_id       = aws_subnet.tf_subnet_private1.id
   security_groups = [aws_security_group.dbsg.id]
+  key_name        = var.key_pair_name
 
   user_data = file("${path.module}/user_data/db_server_setup.sh")
 
