@@ -19,7 +19,7 @@ variable "db_instance_type" {
 variable "ip_address" {
   description = "The IP address that will have inbound access to the bastion host"
   type        = string
-  default     = "102.89.76.176/32"
+  default     = "102.89.22.109/32"
 }
 
 variable "key_pair_name" {

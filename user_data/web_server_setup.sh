@@ -25,8 +25,6 @@ HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --connect-timeout 3 \
     http://169.254.169.254/latest/meta-data/hostname)
 PRIVATE_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --connect-timeout 3 \
     http://169.254.169.254/latest/meta-data/local-ipv4)
-PUBLIC_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --connect-timeout 3 \
-    http://169.254.169.254/latest/meta-data/public-ipv4 || echo "")
 
 # Set defaults if empty
 HOSTNAME=${HOSTNAME:-"Unknown"}
@@ -73,7 +71,6 @@ cat <<EOF > /var/www/html/index.html
     <p>Below is the address of the server you are interacting with now</p>
     <p><b>Instance Hostname:</b> $HOSTNAME</p>
     <p><b>Private IP:</b> $PRIVATE_IP</p>
-    <p><b>Public IP:</b> $PUBLIC_IP</p>
   </div>
 </body>
 </html>
